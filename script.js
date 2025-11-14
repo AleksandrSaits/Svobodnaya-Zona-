@@ -1,3 +1,18 @@
+// Добавьте в начало файла script.js для отладки
+console.log('Script loaded successfully');
+
+// Проверка загрузки DOM
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded');
+    
+    // Проверка наличия элементов преимуществ
+    const featureItems = document.querySelectorAll('.feature-item');
+    console.log('Found feature items:', featureItems.length);
+    
+    featureItems.forEach((item, index) => {
+        console.log(`Feature item ${index}:`, item.innerHTML);
+    });
+});
 // Анимация появления элементов при скролле
 document.addEventListener('DOMContentLoaded', function() {
     // Наблюдатель за пересечением элементов
