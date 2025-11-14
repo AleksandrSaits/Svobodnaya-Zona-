@@ -307,3 +307,53 @@ section {
         text-align: center;
     }
 }
+/* Добавьте эти стили в конец вашего файла style.css */
+
+/* Исправление для текста в преимуществах */
+.feature-item h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--dark-text);
+    font-weight: 600;
+}
+
+.feature-item p {
+    color: var(--gray-text);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Убедитесь, что контейнеры отображаются правильно */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.feature-item {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Дополнительные исправления для видимости текста */
+.feature-item * {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Убедитесь, что шрифты загружаются */
+body {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    }
