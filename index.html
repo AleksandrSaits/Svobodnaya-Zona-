@@ -3,21 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram Чат | Активное сообщество</title>
+    <title>Telegram Чат Сообщества | Тёмная версия</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Анимированный фон -->
+    <div class="particles-container" id="particles-js"></div>
+    
     <!-- Главный блок -->
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title">Telegram Чат Сообщества</h1>
+                <div class="logo">
+                    <div class="logo-icon">⚡</div>
+                    <h1 class="hero-title">Telegram Чат Сообщества</h1>
+                </div>
                 <p class="hero-description">Место для общения, обмена опытом и полезной информацией</p>
                 <a href="https://t.me/+E8IG6nSgrkVmM2Fi" class="cta-button" target="_blank">
-                    Вступить в Telegram чат
+                    <span class="btn-text">Вступить в Telegram чат</span>
+                    <div class="btn-shine"></div>
                 </a>
             </div>
         </div>
@@ -26,25 +33,28 @@
     <!-- О чате -->
     <section class="about">
         <div class="container">
-            <h2 class="section-title">📝 О нашем чате</h2>
-            <div class="about-content">
-                <p>Чат создан для объединения единомышленников, где можно делиться знаниями, задавать вопросы и находить ответы.</p>
-                <p>Мы стремимся создать дружелюбное пространство для продуктивного общения.</p>
-                <div class="about-details">
-                    <div class="detail-item">
-                        <span class="emoji">🎯</span>
-                        <div>
-                            <h3>Целевая аудитория</h3>
-                            <p>Все, кто интересуется развитием, технологиями и общением</p>
-                        </div>
+            <h2 class="section-title">О чате</h2>
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="card-header">
+                        <span class="card-icon">🎯</span>
+                        <h3>Для чего создан</h3>
                     </div>
-                    <div class="detail-item">
-                        <span class="emoji">💬</span>
-                        <div>
-                            <h3>Тематика чата</h3>
-                            <p>Технологии, саморазвитие, полезные материалы и взаимопомощь</p>
-                        </div>
+                    <p>Чат создан для объединения единомышленников, где можно делиться знаниями, задавать вопросы и находить ответы. Мы стремимся создать дружелюбное пространство для продуктивного общения.</p>
+                </div>
+                <div class="about-card">
+                    <div class="card-header">
+                        <span class="card-icon">👥</span>
+                        <h3>Целевая аудитория</h3>
                     </div>
+                    <p>Все, кто интересуется развитием, технологиями и качественным общением. От новичков до экспертов в своих областях.</p>
+                </div>
+                <div class="about-card">
+                    <div class="card-header">
+                        <span class="card-icon">💬</span>
+                        <h3>Тематика чата</h3>
+                    </div>
+                    <p>Технологии, саморазвитие, полезные материалы, взаимопомощь и всё, что помогает расти и развиваться.</p>
                 </div>
             </div>
         </div>
@@ -53,30 +63,30 @@
     <!-- Преимущества -->
     <section class="features">
         <div class="container">
-            <h2 class="section-title">✨ Преимущества</h2>
+            <h2 class="section-title">Преимущества</h2>
             <div class="features-grid">
                 <div class="feature-item">
-                    <span class="feature-emoji">👥</span>
+                    <div class="feature-icon">🔥</div>
                     <h3>Активное сообщество</h3>
                     <p>Регулярные обсуждения и живое общение</p>
                 </div>
                 <div class="feature-item">
-                    <span class="feature-emoji">💡</span>
+                    <div class="feature-icon">💎</div>
                     <h3>Полезная информация</h3>
                     <p>Ценные материалы и конструктивные обсуждения</p>
                 </div>
                 <div class="feature-item">
-                    <span class="feature-emoji">🤝</span>
+                    <div class="feature-icon">🎯</div>
                     <h3>Общение по теме</h3>
                     <p>Фокус на конкретных темах и интересах</p>
                 </div>
                 <div class="feature-item">
-                    <span class="feature-emoji">🆘</span>
+                    <div class="feature-icon">🤝</div>
                     <h3>Помощь участникам</h3>
                     <p>Поддержка и ответы на вопросы</p>
                 </div>
                 <div class="feature-item">
-                    <span class="feature-emoji">⚡</span>
+                    <div class="feature-icon">⚡</div>
                     <h3>Быстрые ответы</h3>
                     <p>Оперативная реакция сообщества</p>
                 </div>
@@ -87,44 +97,63 @@
     <!-- Правила -->
     <section class="rules">
         <div class="container">
-            <h2 class="section-title">📋 Правила чата</h2>
-            <div class="rules-list">
-                <div class="rule-item">
-                    <span class="rule-emoji">🚫</span>
-                    <p>Без оскорблений и неуважительного общения</p>
+            <h2 class="section-title">Правила чата</h2>
+            <div class="rules-container">
+                <div class="rules-list">
+                    <div class="rule-item">
+                        <span class="rule-number">01</span>
+                        <div class="rule-content">
+                            <h4>Без оскорблений</h4>
+                            <p>Уважительное общение без личных оскорблений</p>
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-number">02</span>
+                        <div class="rule-content">
+                            <h4>Без спама</h4>
+                            <p>Запрещён спам и бесполезный флуд</p>
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-number">03</span>
+                        <div class="rule-content">
+                            <h4>Без рекламы</h4>
+                            <p>Никакой коммерческой рекламы и предложений</p>
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-number">04</span>
+                        <div class="rule-content">
+                            <h4>Уважение к другим</h4>
+                            <p>Уважайте мнение других участников</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="rule-item">
-                    <span class="rule-emoji">📵</span>
-                    <p>Без спама и флуда</p>
-                </div>
-                <div class="rule-item">
-                    <span class="rule-emoji">📢</span>
-                    <p>Без рекламы и коммерческих предложений</p>
-                </div>
-                <div class="rule-item">
-                    <span class="rule-emoji">🤫</span>
-                    <p>Уважайте мнение других участников</p>
+                <div class="rules-note">
+                    <p>Полный список правил доступен внутри Telegram-чата</p>
                 </div>
             </div>
-            <p class="rules-note">Полный список правил доступен внутри Telegram-чата</p>
         </div>
     </section>
 
     <!-- Контакты -->
     <section class="contacts">
         <div class="container">
-            <h2 class="section-title">📞 Контакты</h2>
+            <h2 class="section-title">Контакты</h2>
             <div class="contacts-content">
-                <div class="admin-info">
-                    <span class="admin-emoji">👨‍💼</span>
-                    <div>
-                        <h3>Администратор</h3>
-                        <p>@issaevsx</p>
+                <div class="admin-card">
+                    <div class="admin-avatar">
+                        <span class="avatar-icon">👨‍💼</span>
                     </div>
+                    <div class="admin-info">
+                        <h3>Администратор</h3>
+                        <p class="admin-username">@issaevsx</p>
+                        <p class="admin-desc">Всегда на связи для помощи и ответов на вопросы</p>
+                    </div>
+                    <a href="https://t.me/issaevsx" class="contact-button" target="_blank">
+                        Написать админу
+                    </a>
                 </div>
-                <a href="https://t.me/issaevsx" class="contact-button" target="_blank">
-                    Написать админу
-                </a>
             </div>
         </div>
     </section>
@@ -132,13 +161,22 @@
     <!-- Футер -->
     <footer class="footer">
         <div class="container">
-            <p>Присоединяйтесь к нашему сообществу!</p>
-            <a href="https://t.me/+E8IG6nSgrkVmM2Fi" class="footer-button" target="_blank">
-                Вступить в чат
-            </a>
+            <div class="footer-content">
+                <div class="footer-main">
+                    <h3>Готовы присоединиться?</h3>
+                    <p>Станьте частью нашего активного сообщества</p>
+                    <a href="https://t.me/+E8IG6nSgrkVmM2Fi" class="footer-cta" target="_blank">
+                        Вступить в чат
+                    </a>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Telegram Чат Сообщества. Все права защищены.</p>
+                </div>
+            </div>
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="js/script.js"></script>
 </body>
-  </html>
+    </html>
