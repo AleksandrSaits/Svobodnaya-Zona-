@@ -1,124 +1,459 @@
-// Анимация появления элементов при скролле
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Telegram Chat Landing page loaded successfully!');
-
-    // Наблюдатель за пересечением элементов
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-                
-                // Добавляем анимацию для дочерних элементов
-                if (entry.target.classList.contains('features-grid')) {
-                    const featureItems = entry.target.querySelectorAll('.feature-item');
-                    featureItems.forEach((item, index) => {
-                        setTimeout(() => {
-                            item.style.opacity = '1';
-                            item.style.transform = 'translateY(0)';
-                        }, index * 100);
-                    });
-                }
-            }
-        });
-    }, observerOptions);
-
-    // Анимируем секции
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(20px)';
-        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(section);
-    });
-
-    // Анимация для карточек преимуществ
-    const featureItems = document.querySelectorAll('.feature-item');
-    featureItems.forEach((item, index) => {
-        item.style.opacity = '0';
-        item.style.transform = 'translateY(20px)';
-        item.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
-    });
-
-    // Анимация для элементов правил
-    const ruleItems = document.querySelectorAll('.rule-item');
-    ruleItems.forEach((item, index) => {
-        item.style.opacity = '0';
-        item.style.transform = 'translateX(-20px)';
-        item.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
-        
-        // Запускаем анимацию при появлении в viewport
-        const ruleObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateX(0)';
-                    }, index * 100);
-                }
-            });
-        });
-        ruleObserver.observe(item);
-    });
-
-    // Плавная прокрутка для якорей
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
-    // Анимация кнопок при наведении
-    const buttons = document.querySelectorAll('.cta-button, .contact-button, .footer-button');
-    buttons.forEach(button => {
-        button.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-2px) scale(1.02)';
-        });
-        
-        button.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-
-    // Проверка всех элементов
-    console.log('Feature items count:', document.querySelectorAll('.feature-item').length);
-    console.log('Rule items count:', document.querySelectorAll('.rule-item').length);
-});
-
-// Функции для аналитики
-function trackButtonClick(buttonType) {
-    console.log(`Button clicked: ${buttonType}`);
-    // Здесь можно добавить код для Google Analytics или другой аналитики
+/* ТЁМНАЯ ЦВЕТОВАЯ СХЕМА */
+:root {
+    --bg-primary: #0f0f0f;
+    --bg-secondary: #1a1a1a;
+    --bg-tertiary: #252525;
+    --accent-primary: #6366f1;
+    --accent-secondary: #8b5cf6;
+    --accent-glow: rgba(99, 102, 241, 0.3);
+    --text-primary: #ffffff;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --border-color: #374151;
+    --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --gradient: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-// Обработчики для отслеживания кликов
-document.addEventListener('DOMContentLoaded', function() {
-    const joinButtons = document.querySelectorAll('.cta-button, .footer-button');
-    const contactButtons = document.querySelectorAll('.contact-button');
-    
-    joinButtons.forEach(button => {
-        button.addEventListener('click', () => trackButtonClick('join_chat'));
-    });
-    
-    contactButtons.forEach(button => {
-        button.addEventListener('click', () => trackButtonClick('contact_admin'));
-    });
-});
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-// Добавляем класс для загруженной страницы
-window.addEventListener('load', function() {
-    document.body.classList.add('page-loaded');
-    console.log('Page fully loaded with all resources');
-});
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Частицы на фоне */
+.particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* Секции */
+section {
+    padding: 100px 0;
+    position: relative;
+}
+
+.section-title {
+    font-size: 3rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 4rem;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Главный блок */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+.logo {
+    margin-bottom: 2rem;
+}
+
+.logo-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-description {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+    line-height: 1.8;
+}
+
+/* Кнопки */
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient);
+    color: white;
+    padding: 18px 40px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.2rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 8px 32px var(--accent-glow);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px var(--accent-glow);
+}
+
+.btn-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.cta-button:hover .btn-shine {
+    left: 100%;
+}
+
+/* О чате */
+.about {
+    background: var(--bg-secondary);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.about-card {
+    background: var(--bg-tertiary);
+    padding: 2.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    box-shadow: var(--card-shadow);
+}
+
+.about-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-primary);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.card-icon {
+    font-size: 2rem;
+    background: var(--gradient);
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+
+.about-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.about-card p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+/* Преимущества */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.feature-item {
+    background: var(--bg-tertiary);
+    padding: 2.5rem 2rem;
+    border-radius: 16px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    box-shadow: var(--card-shadow);
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-primary);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.feature-item h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.feature-item p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Правила */
+.rules {
+    background: var(--bg-secondary);
+}
+
+.rules-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.rules-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.rule-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 2rem;
+    background: var(--bg-tertiary);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.rule-item:hover {
+    border-color: var(--accent-primary);
+    transform: translateX(10px);
+}
+
+.rule-number {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent-primary);
+    background: var(--bg-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    min-width: 60px;
+    text-align: center;
+}
+
+.rule-content h4 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.rule-content p {
+    color: var(--text-secondary);
+}
+
+.rules-note {
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Контакты */
+.contacts-content {
+    display: flex;
+    justify-content: center;
+}
+
+.admin-card {
+    background: var(--bg-tertiary);
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+    max-width: 500px;
+    width: 100%;
+}
+
+.admin-avatar {
+    margin-bottom: 1.5rem;
+}
+
+.avatar-icon {
+    font-size: 4rem;
+    display: block;
+}
+
+.admin-info h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.admin-username {
+    font-size: 1.3rem;
+    color: var(--accent-primary);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.admin-desc {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.contact-button {
+    display: inline-block;
+    background: var(--gradient);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+    border: none;
+}
+
+.contact-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--accent-glow);
+}
+
+/* Футер */
+.footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-content {
+    text-align: center;
+}
+
+.footer-main {
+    margin-bottom: 3rem;
+}
+
+.footer-main h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.footer-main p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.footer-cta {
+    display: inline-block;
+    background: var(--gradient);
+    color: white;
+    padding: 15px 35px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.footer-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--accent-glow);
+}
+
+.footer-bottom {
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .hero-description {
+        font-size: 1.2rem;
+    }
+    
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .rule-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    section {
+        padding: 80px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .about-card,
+    .feature-item,
+    .rule-item {
+        padding: 1.5rem;
+    }
+    
+    .cta-button {
+        padding: 15px 30px;
+        font-size: 1.1rem;
+    }
+        }
